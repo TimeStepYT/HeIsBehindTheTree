@@ -4,7 +4,9 @@
 
 class EggRoomLayer : public cocos2d::CCLayer {
 private:
-    bool init();
+    bool init() override;
+    void onExit() override;
+    void keyBackClicked() override;
 
 public:
     static EggRoomLayer* create();

@@ -25,6 +25,8 @@ bool EggRoomLayer::init() {
     if (!CCLayer::init())
         return false;
 
+    GameManager::get()->fadeInMusic("man.ogg"_spr);
+
     geode::addBackButton(this);
 
     this->setMouseEnabled(true);
@@ -55,4 +57,13 @@ bool EggRoomLayer::init() {
     this->addChild(tree);
 
     return true;
+}
+
+void EggRoomLayer::keyBackClicked() {
+    CCDirector::get()->popSceneWithTransition(.5f, PopTransition::kPopTransitionFade);
+}
+
+void EggRoomLayer::onExit() {
+    GameManager::get()->playMenuMusic();
+    this->stopAllActions();
 }
