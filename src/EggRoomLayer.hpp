@@ -8,6 +8,8 @@ private:
     void onExit() override;
     void keyBackClicked() override;
 
+    void dialogButtonClicked(cocos2d::CCMenuItem* sender);
+
 public:
     static EggRoomLayer* create();
     static cocos2d::CCScene* scene();

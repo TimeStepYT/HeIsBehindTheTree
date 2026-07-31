@@ -4,7 +4,7 @@
 using namespace geode::prelude;
 
 EggRoomLayer* EggRoomLayer::create() {
-    auto ret = new EggRoomLayer();
+    EggRoomLayer* ret = new EggRoomLayer();
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -14,8 +14,8 @@ EggRoomLayer* EggRoomLayer::create() {
 }
 
 CCScene* EggRoomLayer::scene() {
-    auto layer = EggRoomLayer::create();
-    auto scene = CCScene::create();
+    EggRoomLayer* layer = EggRoomLayer::create();
+    CCScene* scene = CCScene::create();
     layer->setID("main-layer");
     scene->addChild(layer);
     return scene;
@@ -34,7 +34,7 @@ bool EggRoomLayer::init() {
     this->setKeyboardEnabled(true);
     this->setKeypadEnabled(true);
 
-    auto floorCircle = CCSprite::create("floorCircle.png"_spr);
+    CCSprite* floorCircle = CCSprite::create("floorCircle.png"_spr);
     floorCircle->setPosition(this->getContentSize() / 2.f);
     floorCircle->setID("floor-circle");
 
@@ -48,15 +48,32 @@ bool EggRoomLayer::init() {
     floorSquare->setContentHeight(this->getContentHeight() / 2);
     floorSquare->setID("floor-square");
 
-    auto tree = EggTree::create();
+    EggTree* tree = EggTree::create();
     tree->setPosition(floorCircle->getPosition());
     tree->setID("tree");
+
+    CCMenu* dialogMenu = CCMenu::create();
+    dialogMenu->setID("dialog-menu");
+
+    CCMenuItem* dialogButton = CCMenuItemExt::create([this](CCMenuItem* item){
+        this->dialogButtonClicked(item);
+    });
+    dialogButton->setID("dialog-button");
+    dialogButton->setPositionY(15.f);
+    dialogButton->setContentSize({120.f, 85.f});
+
+    dialogMenu->addChild(dialogButton);
 
     this->addChild(floorCircle);
     this->addChild(floorSquare);
     this->addChild(tree);
+    this->addChild(dialogMenu);
 
     return true;
+}
+
+void EggRoomLayer::dialogButtonClicked(CCMenuItem* sender) {
+    FLAlertLayer::create("", "(He is behind the tree.)", "OK")->show();
 }
 
 void EggRoomLayer::keyBackClicked() {
@@ -65,5 +82,8 @@ void EggRoomLayer::keyBackClicked() {
 
 void EggRoomLayer::onExit() {
     GameManager::get()->playMenuMusic();
-    this->stopAllActions();
+}
+
+EggRoomLayer::~EggRoomLayer() {
+    log::info("Deleting");
 }
