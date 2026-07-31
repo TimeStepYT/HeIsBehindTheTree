@@ -81,9 +81,6 @@ void EggRoomLayer::keyBackClicked() {
 }
 
 void EggRoomLayer::onExit() {
+    CCLayer::onExit();
     GameManager::get()->playMenuMusic();
-}
-
-EggRoomLayer::~EggRoomLayer() {
-    log::info("Deleting");
 }
