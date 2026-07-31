@@ -3,15 +3,14 @@
 #include <Geode/modify/CreatorLayer.hpp>
 
 #include "EggRoomLayer.hpp"
+#include "Global.hpp"
 
 using namespace geode::prelude;
-
-static std::mt19937 mt{std::random_device{}()};
 
 class $modify(ManCreatorLayer, CreatorLayer) {
     // You're here to know how to activate it, aren't you... cheater.
     void onTreasureRoom(CCObject* sender) {
-        bool toEggRoom = (mt() % 100) < 2; // 2% chance
+        bool toEggRoom = (global::mt() % 100) < 2; // 2% chance
         toEggRoom = true;
         if (!toEggRoom)
             return CreatorLayer::onTreasureRoom(sender);
