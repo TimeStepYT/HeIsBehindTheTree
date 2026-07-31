@@ -1,6 +1,8 @@
 #include "EggRoomLayer.hpp"
 #include "EggTree.hpp"
 
+#include <timestepyt.deltarune_textboxes/api/API.hpp>
+
 using namespace geode::prelude;
 
 EggRoomLayer* EggRoomLayer::create() {
@@ -24,6 +26,9 @@ CCScene* EggRoomLayer::scene() {
 bool EggRoomLayer::init() {
     if (!CCLayer::init())
         return false;
+
+    // I want this to always be the default sound if you have Deltarune Textboxes
+    deltarune_textboxes::lockTextSound("Default").unwrapOr(false);
 
     GameManager::get()->fadeInMusic("man.ogg"_spr);
 
@@ -72,8 +77,54 @@ bool EggRoomLayer::init() {
     return true;
 }
 
+void EggRoomLayer::showAlert(std::string const& text) {
+    FLAlertLayer::create("", text, "OK")->show();
+}
+
+void EggRoomLayer::showDefaultMessage() {
+    this->showAlert("(Well, there is not a man here.)");
+}
+
+void EggRoomLayer::receiveEgg() {
+    FMODAudioEngine::sharedEngine()->playEffect("snd_egg.wav"_spr);
+    Mod::get()->setSavedValue<bool>("received-egg", true); // I don't know if I'm gonna use this.
+    // Right now, I don't want to make this mod do less for all the other times you go into the room
+}
+
+void EggRoomLayer::eggSequence() {
+    std::string text1 = "(Well, there is a man here.)";
+    std::string text2 = "(He offered you something.)";
+    std::string text3 = "(You received an Egg.)";
+
+    FLAlertLayer* alert = geode::createQuickPopup("", text1, "OK", nullptr,
+        [this, text2, text3](FLAlertLayer* layer, bool) {
+            geode::createQuickPopup("", text2, "Yes", "No", 
+                [this, text3](FLAlertLayer* layer2, bool btn2) {
+                    if (btn2)
+                        this->showDefaultMessage();
+                    else {
+                        this->showAlert(text3);
+                        this->receiveEgg();
+                    }
+                }
+            );
+        }
+    );
+}
+
 void EggRoomLayer::dialogButtonClicked(CCMenuItem* sender) {
-    FLAlertLayer::create("", "(He is behind the tree.)", "OK")->show();
+    switch (this->m_buttonInteractCounter) {
+    case 0:
+        this->showAlert("(He is behind the tree.)");
+        break;
+    case 1:
+        this->eggSequence();
+        break;
+    default:
+        this->showDefaultMessage();
+        break;
+    }
+    this->m_buttonInteractCounter++;
 }
 
 void EggRoomLayer::keyBackClicked() {
@@ -82,5 +133,7 @@ void EggRoomLayer::keyBackClicked() {
 
 void EggRoomLayer::onExit() {
     CCLayer::onExit();
+    deltarune_textboxes::unlockTextSound();
+
     GameManager::get()->playMenuMusic();
 }

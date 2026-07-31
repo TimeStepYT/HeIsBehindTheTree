@@ -12,10 +12,14 @@
 	"developer": "TimeStepYT",
 	"description": "* Well, there is a man here.",
 	"dependencies": {
-		"geode.node-ids": ">=v1.23.3"
+		"geode.node-ids": ">=v1.23.3",
+		"timestepyt.deltarune_textboxes": {
+			"required": false,
+			"version": ">=1.7.3"
+		}
 	},
 	"resources": {
 		"sprites": ["resources/*.png"],
-		"files": ["resources/man.ogg"]
+		"files": ["resources/man.ogg", "resources/snd_egg.wav"]
 	}
 }

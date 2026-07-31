@@ -11,7 +11,7 @@ class $modify(ManCreatorLayer, CreatorLayer) {
     // You're here to know how to activate it, aren't you... cheater.
     void onTreasureRoom(CCObject* sender) {
         bool toEggRoom = (global::mt() % 100) < 2; // 2% chance
-        toEggRoom = true;
+        //toEggRoom = true;
         if (!toEggRoom)
             return CreatorLayer::onTreasureRoom(sender);
 

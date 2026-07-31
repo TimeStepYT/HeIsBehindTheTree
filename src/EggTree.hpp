@@ -3,7 +3,7 @@
 #include <Geode/Geode.hpp>
 
 class EggTree : public cocos2d::CCNode {
-private:
+protected:
     cocos2d::CCPoint const m_backPos{101.f, 113.f};
     cocos2d::CCPoint const m_frontPos{103.f, 116.f};
     cocos2d::CCPoint const m_particlePos{105.f, 125.f};
