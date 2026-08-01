@@ -21,6 +21,11 @@
 			"version": ">=1.7.3"
 		}
 	},
+	"api": {
+		"include": [
+			"api/*.hpp"
+		]
+	},
 	"resources": {
 		"sprites": ["resources/*.png"],
 		"files": ["resources/man.ogg", "resources/snd_egg.wav"]

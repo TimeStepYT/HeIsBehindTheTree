@@ -2,8 +2,10 @@
 
 #include <Geode/modify/CreatorLayer.hpp>
 #include <Geode/modify/SecretLayer2.hpp>
+#include <Geode/modify/SecretLayer3.hpp>
 
 #include "EggRoomLayer.hpp"
+#include "EggSpawner.hpp"
 #include "Global.hpp"
 
 using namespace geode::prelude;
@@ -12,7 +14,7 @@ class $modify(ManCreatorLayer, CreatorLayer) {
     void onTreasureRoom(CCObject* sender) {
         bool toEggRoom = (global::mt() % 100) < 2; // 2% chance
         //toEggRoom = true;
-        if (!toEggRoom)
+        if (!toEggRoom && !Mod::get()->getSavedValue<bool>("received-egg"))
             return CreatorLayer::onTreasureRoom(sender);
 
         CCDirector* director = CCDirector::get();
@@ -49,5 +51,31 @@ class $modify(ManVaultLayer, SecretLayer2) {
         }
 
         SecretLayer2::onSubmit(sender);
+    }
+};
+
+class $modify(ManSecretLayer3, SecretLayer3) {
+    bool init() {
+        if (!SecretLayer3::init())
+            return false;
+        
+        bool const storedEgg = Mod::get()->getSavedValue<bool>("stored-egg");
+        auto const externalEggsStored = Mod::get()->getSavedValue<std::vector<std::string>>("external-eggs-stored");
+        auto const externalEggsStoredCustom = Mod::get()->getSavedValue<std::vector<std::string>>("external-eggs-stored-custom");
+
+        int const eggCount = static_cast<int>(storedEgg) + externalEggsStored.size() - externalEggsStoredCustom.size();
+
+        log::debug("{}, {}, {}", storedEgg, externalEggsStored.size(), externalEggsStoredCustom.size());
+
+        EggSpawner* spawner = EggSpawner::create();
+
+        spawner->setContentSize({80.f, 80.f});
+        spawner->setPosition({30.f, 30.f});
+
+        spawner->spawnEggs(eggCount);
+
+        this->addChild(spawner);
+
+        return true;
     }
 };

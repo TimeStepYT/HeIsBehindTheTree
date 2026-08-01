@@ -28,7 +28,7 @@ bool EggRoomLayer::init() {
         return false;
 
     // I want this to always be the default sound if you have Deltarune Textboxes
-    deltarune_textboxes::lockTextSound("Default").unwrapOr(false);
+    deltarune_textboxes::lockTextSound("Default").unwrapOrDefault();
 
     GameManager::get()->fadeInMusic("man.ogg"_spr);
 
@@ -88,7 +88,6 @@ void EggRoomLayer::showDefaultMessage() {
 void EggRoomLayer::receiveEgg() {
     FMODAudioEngine::sharedEngine()->playEffect("snd_egg.wav"_spr);
     Mod::get()->setSavedValue<bool>("received-egg", true);
-    // Right now, I don't want to make this mod do less for all the other times you go into the room
 }
 
 void EggRoomLayer::eggSequence() {
