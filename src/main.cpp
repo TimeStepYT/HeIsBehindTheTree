@@ -12,7 +12,7 @@ using namespace geode::prelude;
 
 class $modify(ManCreatorLayer, CreatorLayer) {
     void onTreasureRoom(CCObject* sender) {
-        bool toEggRoom = (global::mt() % 100) < 2; // 2% chance
+        bool toEggRoom = (global::mt() % 100) < 50; // 50% chance
         //toEggRoom = true;
         if (!toEggRoom || Mod::get()->getSavedValue<bool>("received-egg"))
             return CreatorLayer::onTreasureRoom(sender);
