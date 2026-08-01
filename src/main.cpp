@@ -14,7 +14,7 @@ class $modify(ManCreatorLayer, CreatorLayer) {
     void onTreasureRoom(CCObject* sender) {
         bool toEggRoom = (global::mt() % 100) < 2; // 2% chance
         //toEggRoom = true;
-        if (!toEggRoom && !Mod::get()->getSavedValue<bool>("received-egg"))
+        if (!toEggRoom && Mod::get()->getSavedValue<bool>("received-egg"))
             return CreatorLayer::onTreasureRoom(sender);
 
         CCDirector* director = CCDirector::get();
