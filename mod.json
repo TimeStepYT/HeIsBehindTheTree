@@ -8,9 +8,12 @@
 	},
 	"id": "timestepyt.heisbehindthetree",
 	"name": "HeIsBehindTheTree",
-	"version": "v1.0.0-alpha.1",
+	"version": "v1.0.0",
 	"developer": "TimeStepYT",
-	"description": "* Well, there is a man here.",
+	"description": "* (Well, there is a man here.)",
+	"links": {
+		"source": "https://github.com/TimeStepYT/HeIsBehindTheTree"
+	},
 	"dependencies": {
 		"geode.node-ids": ">=v1.23.3",
 		"timestepyt.deltarune_textboxes": {

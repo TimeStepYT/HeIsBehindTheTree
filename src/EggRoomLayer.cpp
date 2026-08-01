@@ -87,7 +87,7 @@ void EggRoomLayer::showDefaultMessage() {
 
 void EggRoomLayer::receiveEgg() {
     FMODAudioEngine::sharedEngine()->playEffect("snd_egg.wav"_spr);
-    Mod::get()->setSavedValue<bool>("received-egg", true); // I don't know if I'm gonna use this.
+    Mod::get()->setSavedValue<bool>("received-egg", true);
     // Right now, I don't want to make this mod do less for all the other times you go into the room
 }
 
