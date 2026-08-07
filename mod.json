@@ -8,7 +8,7 @@
 	},
 	"id": "timestepyt.heisbehindthetree",
 	"name": "HeIsBehindTheTree",
-	"version": "v1.0.2",
+	"version": "v1.0.3",
 	"developer": "TimeStepYT",
 	"description": "* (Well, there is a man here.)",
 	"links": {
@@ -19,6 +19,16 @@
 		"timestepyt.deltarune_textboxes": {
 			"required": false,
 			"version": ">=1.7.3"
+		}
+	},
+	"settings": {
+		"reset-egg-data": {
+			"type": "button",
+			"name": "Reset Mod Data",
+			"description": "Erases your saved mod data.",
+			"buttons": {
+				"reset": "Erase Mod savedata"
+			}
 		}
 	},
 	"api": {

@@ -4,6 +4,8 @@
 #include <Geode/modify/SecretLayer2.hpp>
 #include <Geode/modify/SecretLayer3.hpp>
 
+#include <Geode/loader/SettingV3.hpp>
+
 #include "EggRoomLayer.hpp"
 #include "EggSpawner.hpp"
 #include "Global.hpp"
@@ -79,3 +81,26 @@ class $modify(ManSecretLayer3, SecretLayer3) {
         return true;
     }
 };
+
+// reset stuff (new!!)
+$on_mod(Loaded) {
+    ButtonSettingPressedEventV3(Mod::get(), "reset-egg-data").listen([](std::string_view buttonKey) {
+        if (buttonKey != "reset")
+            return;
+
+        geode::createQuickPopup(
+            "Reset Mod savedata",
+            "Are you sure you want to erase the mod's savedata?",
+            "Stop", "Proceed",
+            [](FLAlertLayer*, bool btn2) {
+                if (!btn2)
+                    return;
+
+                Mod::get()->setSavedValue<bool>("received-egg", false);
+                Mod::get()->setSavedValue<bool>("stored-egg", false);
+
+                FLAlertLayer::create("Mod savedata Reset", "There is no going back!", "Proceed")->show();
+            }
+        );
+    }).leak();
+}

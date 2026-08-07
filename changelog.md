@@ -1,3 +1,6 @@
+## v1.0.3
+- Added a way to erase the mod's savedata so the user can experience the egg room again
+
 ## v1.0.2
 - The mod itself didn't change
 - Fixed a typo in the about section and made the hint a little clearer
