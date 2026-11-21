@@ -1,3 +1,6 @@
+## v1.0.3
+- Updated to 2.2091
+
 ## v1.0.2
 - The mod itself didn't change
 - Fixed a typo in the about section and made the hint a little clearer
