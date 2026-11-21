@@ -39,6 +39,8 @@ jobs:
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
+          bindings: TimeStepYT/bindings
+          bindings-ref: my-mods
           combine: true
           target: ${{ matrix.config.target }}
 
