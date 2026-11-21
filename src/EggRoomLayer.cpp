@@ -1,7 +1,7 @@
 #include "EggRoomLayer.hpp"
 #include "EggTree.hpp"
 
-#include <timestepyt.deltarune_textboxes/api/API.hpp>
+#include <timestepyt.deltarune_textboxes/API.hpp>
 
 using namespace geode::prelude;
 
